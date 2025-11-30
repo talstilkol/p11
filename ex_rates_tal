@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחשבון מט"ח מורחב</title>
+ <link rel ="mystyle" href= "mystyle.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>מחשבון מט"ח בזמן אמת</h1>
+
+        <label>סכום להמרה:</label>
+        <input type="number" id="amount" value="100">
+
+        <label>ממטבע:</label>
+        <select id="from">
+            <option value="USD" selected>$ דולר אמריקאי (USD)</option>
+            <option value="ILS">₪ שקל חדש (ILS)</option>
+            <option value="EUR">€ אירו (EUR)</option>
+            <option value="GBP">£ לירה שטרלינג (GBP)</option>
+            <option value="JPY">¥ ין יפני (JPY)</option>
+            <option value="AUD">A$ דולר אוסטרלי (AUD)</option>
+            <option value="CAD">C$ דולר קנדי (CAD)</option>
+            <option value="CHF">Fr פרנק שוויצרי (CHF)</option>
+            <option value="CNY">¥ יואן סיני (CNY)</option>
+        </select>
+
+        <label>למטבע:</label>
+        <select id="to">
+            <option value="ILS" selected>₪ שקל חדש (ILS)</option>
+            <option value="USD">$ דולר אמריקאי (USD)</option>
+            <option value="EUR">€ אירו (EUR)</option>
+            <option value="GBP">£ לירה שטרלינג (GBP)</option>
+            <option value="JPY">¥ ין יפני (JPY)</option>
+            <option value="AUD">A$ דולר אוסטרלי (AUD)</option>
+            <option value="CAD">C$ דולר קנדי (CAD)</option>
+            <option value="CHF">Fr פרנק שוויצרי (CHF)</option>
+            <option value="CNY">¥ יואן סיני (CNY)</option>
+        </select>
+
+        <button onclick="convert()">בצע המרה בזמן אמת</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function convert() {
+            const amount = document.getElementById('amount').value;
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const display = document.getElementById('result');
+
+            if (!amount) return;
+            
+            display.innerText = "טוען...";
+
+            if (from === to) {
+                display.innerText = amount + " " + to;
+                return;
+            }
+
+            try {
+                const res = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`);
+                const data = await res.json();
+                
+                // עיצוב המספר עם פסיקים (למשל 1,000.00)
+                const formattedNumber = new Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }).format(data.rates[to]);
+
+                display.innerText = formattedNumber + " " + to;
+            } catch (e) {
+                display.innerText = "שגיאה בחיבור לשרת";
+            }
+        }
+    </script>
+
+</body>
+</html>
