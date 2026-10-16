@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מחשבון מט"ח מורחב</title>
- <link rel ="mystyle" href= "mystyle.css">
+    <title>מחשבון מט"ח — שערי ייחוס</title>
+    <link rel="stylesheet" href="mystyle.css">
 </head>
 <body>
 
     <div class="container">
-        <h1>מחשבון מט"ח בזמן אמת</h1>
+        <h1>מחשבון מט"ח לפי שער הייחוס האחרון</h1>
 
-        <label>סכום להמרה:</label>
+        <label for="amount">סכום להמרה:</label>
         <input type="number" id="amount" value="100">
 
-        <label>ממטבע:</label>
+        <label for="from">ממטבע:</label>
         <select id="from">
             <option value="USD" selected>$ דולר אמריקאי (USD)</option>
             <option value="ILS">₪ שקל חדש (ILS)</option>
@@ -27,7 +27,7 @@
             <option value="CNY">¥ יואן סיני (CNY)</option>
         </select>
 
-        <label>למטבע:</label>
+        <label for="to">למטבע:</label>
         <select id="to">
             <option value="ILS" selected>₪ שקל חדש (ILS)</option>
             <option value="USD">$ דולר אמריקאי (USD)</option>
@@ -40,7 +40,7 @@
             <option value="CNY">¥ יואן סיני (CNY)</option>
         </select>
 
-        <button onclick="convert()">בצע המרה בזמן אמת</button>
+        <button type="button" onclick="convert()">בצע המרה לפי השער האחרון</button>
 
         <div id="result"></div>
     </div>
